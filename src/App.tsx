@@ -2,6 +2,7 @@ import { Container, Box, Typography } from '@mui/material';
 import './App.css';
 import AddHabitForm from './components/AddHabitForm';
 import HabitList from './components/HabitList';
+import HabitStats from './components/HabitStats';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         </Typography>
         <AddHabitForm />
         <HabitList />
+        <HabitStats />
       </Box>
     </Container>
   );

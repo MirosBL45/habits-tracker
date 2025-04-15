@@ -39,6 +39,13 @@ export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
             completedDates: [],
             createdAt: new Date().toISOString(),
         },
+        {
+            id: "3",
+            name: "Market",
+            frequency: "weekly",
+            completedDates: [],
+            createdAt: new Date().toISOString(),
+        },
     ];
     return mockHabits;
 });
