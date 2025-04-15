@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Paper, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import { toggleHabit } from '../redux/slices/habitSlice';
+import { toggleHabit, removeHabit, Habit } from '../redux/slices/habitSlice';
 
 export default function HabitList(): React.ReactElement {
   const { habits } = useSelector((state: RootState) => state.habits);
@@ -15,6 +15,24 @@ export default function HabitList(): React.ReactElement {
   const dispatch = useDispatch<AppDispatch>();
 
   const today = new Date().toISOString().split('T')[0];
+
+  function getStreak(habit: Habit) {
+    let streak = 0;
+    const currentDate = new Date();
+
+    while (true) {
+      const dateString = currentDate.toISOString().split('T')[0];
+
+      if (habit.completedDates.includes(dateString)) {
+        streak++;
+        currentDate.setDate(currentDate.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+
+    return streak;
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 4 }}>
@@ -63,12 +81,25 @@ export default function HabitList(): React.ReactElement {
                   variant="outlined"
                   color="error"
                   startIcon={<DeleteIcon />}
+                  onClick={() => {
+                    dispatch(removeHabit(habit.id));
+                  }}
                 >
                   Remove
                 </Button>
               </Box>
             </Grid>
           </Grid>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="body2">
+              Current Streak: {getStreak(habit)} days
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={(getStreak(habit) / 30) * 100}
+              sx={{ mt: 1 }}
+            />
+          </Box>
         </Paper>
       ))}
     </Box>

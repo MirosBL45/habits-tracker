@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from 'uuid';
 
 export interface Habit {
@@ -11,11 +11,37 @@ export interface Habit {
 
 interface HabitState {
     habits: Habit[];
+    isLoading: boolean;
+    error: string | null;
 }
 
 const initialState: HabitState = {
     habits: [],
+    isLoading: false,
+    error: null,
 }
+
+export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
+    // Simulating an API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const mockHabits: Habit[] = [
+        {
+            id: "1",
+            name: "Read",
+            frequency: "daily",
+            completedDates: [],
+            createdAt: new Date().toISOString(),
+        },
+        {
+            id: "2",
+            name: "Exercise",
+            frequency: "daily",
+            completedDates: [],
+            createdAt: new Date().toISOString(),
+        },
+    ];
+    return mockHabits;
+});
 
 const habitSlice = createSlice({
     name: 'habits',
@@ -32,6 +58,9 @@ const habitSlice = createSlice({
 
             state.habits.push(newHabit);
         },
+        removeHabit: (state, action: PayloadAction<string>) => {
+            state.habits = state.habits.filter(habit => habit.id !== action.payload);
+        },
         toggleHabit: (state, action: PayloadAction<{ id: string; date: string }>) => {
             const habit = state.habits.find(hab => hab.id === action.payload.id);
 
@@ -45,7 +74,21 @@ const habitSlice = createSlice({
             }
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchHabits.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchHabits.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.habits = action.payload;
+            })
+            .addCase(fetchHabits.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error.message || "Failed to fetch habits";
+            });
+    },
 });
 
-export const { addHabit, toggleHabit } = habitSlice.actions;
+export const { addHabit, toggleHabit, removeHabit } = habitSlice.actions;
 export default habitSlice.reducer;
