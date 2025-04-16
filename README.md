@@ -1,54 +1,27 @@
-# React + TypeScript + Vite
+## Project: Habit Tracker App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a **Habit Tracker** mini application that allows users to add new habits, mark them as completed, track their streak over a 30-day period, and delete them once no longer needed. It’s designed to promote daily discipline and improve productivity through clear habit tracking.
 
-Currently, two official plugins are available:
+The project was developed using the following technologies and tools:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. **Core and Language**
 
-## Expanding the ESLint configuration
+- **Vite.js**: A fast and modern frontend build tool for lightning-fast development.
+  - <a href="https://vitejs.dev/" target="_blank">Learn more about Vite.js</a>
+- **TypeScript**: A statically typed superset of JavaScript that adds type safety and improves code maintainability.
+  - <a href="https://www.typescriptlang.org/" target="_blank">Learn more about TypeScript</a>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 2. **UI Components**
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Material UI**: A popular React UI framework that provides pre-designed, accessible components and a consistent look and feel.
+  - <a href="https://mui.com/" target="_blank">Learn more about Material UI</a>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3. **State Management**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Redux Toolkit**: A powerful and modern approach to managing state in React applications with simplified configuration.
+  - <a href="https://redux-toolkit.js.org/" target="_blank">Learn more about Redux Toolkit</a>
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### 4. **Utilities**
+
+- **uuid**: A library used to generate unique identifiers for each habit, ensuring reliable data handling.
+  - <a href="https://www.npmjs.com/package/uuid" target="_blank">Learn more about uuid</a>
