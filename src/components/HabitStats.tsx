@@ -14,7 +14,13 @@ export default function HabitStats(): React.ReactElement {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchHabits());
+    const savedHabits = localStorage.getItem('habits');
+    const parsed = savedHabits ? JSON.parse(savedHabits) : [];
+  
+    // If there is no data or all are deleted, pull the dummy data
+    if (!savedHabits || parsed.length === 0) {
+      dispatch(fetchHabits());
+    }
   }, [dispatch]);
 
   const getTotalHabits = () => habits.length;

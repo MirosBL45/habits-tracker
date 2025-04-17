@@ -46,10 +46,15 @@ export default function HabitList(): React.ReactElement {
                 paddingRight: 2,
               }}
             >
-              <Typography variant="h6">{habit.name}</Typography>
+              <Typography variant="h6">
+                {habit.name.charAt(0).toUpperCase() + habit.name.slice(1)}
+              </Typography>
               <Typography variant="body2" color="text.secondary">
                 {habit.frequency.charAt(0).toUpperCase() +
                   habit.frequency.slice(1)}
+              </Typography>
+              <Typography variant="body2" color="text.primary">
+                {habit.suggested ? 'Suggested for you 💡' : ''}
               </Typography>
             </Grid>
             <Grid

@@ -7,6 +7,7 @@ export interface Habit {
     frequency: "daily" | "weekly";
     completedDates: string[];
     createdAt: string;
+    suggested: boolean;
 }
 
 interface HabitState {
@@ -15,8 +16,10 @@ interface HabitState {
     error: string | null;
 }
 
+const savedHabits = localStorage.getItem('habits');
+
 const initialState: HabitState = {
-    habits: [],
+    habits: savedHabits ? JSON.parse(savedHabits) : [],
     isLoading: false,
     error: null,
 }
@@ -31,6 +34,7 @@ export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
             frequency: "daily",
             completedDates: [],
             createdAt: new Date().toISOString(),
+            suggested: true,
         },
         {
             id: "2",
@@ -38,6 +42,7 @@ export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
             frequency: "daily",
             completedDates: [],
             createdAt: new Date().toISOString(),
+            suggested: true,
         },
         {
             id: "3",
@@ -45,6 +50,7 @@ export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
             frequency: "weekly",
             completedDates: [],
             createdAt: new Date().toISOString(),
+            suggested: true,
         },
     ];
     return mockHabits;
@@ -61,6 +67,7 @@ const habitSlice = createSlice({
                 frequency: action.payload.frequency,
                 completedDates: [],
                 createdAt: new Date().toISOString(),
+                suggested: false,
             };
 
             state.habits.push(newHabit);
